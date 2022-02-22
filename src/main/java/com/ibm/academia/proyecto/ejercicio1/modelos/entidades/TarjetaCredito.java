@@ -14,8 +14,8 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Entity
-//@Table(name = "tarjetas_credito", schema = "ejercicio1")
-@Table(name = "tarjetas_credito")
+@Table(name = "tarjetas_credito", schema = "ejercicio1")
+//@Table(name = "tarjetas_credito")
 public class TarjetaCredito implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
@@ -39,8 +39,8 @@ public class TarjetaCredito implements Serializable {
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(
-            //name = "tarjeta_pasion", schema = "ejercicio1",
-            name = "tarjeta_pasion",
+            name = "tarjeta_pasion", schema = "ejercicio1",
+            //name = "tarjeta_pasion",
             joinColumns = @JoinColumn(name = "tarjeta_id"),
             inverseJoinColumns = @JoinColumn(name = "pasion_id")
     )

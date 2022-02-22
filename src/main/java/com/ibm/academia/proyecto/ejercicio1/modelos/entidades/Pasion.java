@@ -14,8 +14,8 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Entity
-//@Table(name = "pasiones", schema = "ejercicio1")
-@Table(name = "pasiones")
+@Table(name = "pasiones", schema = "ejercicio1")
+//@Table(name = "pasiones")
 public class Pasion implements Serializable {
     @Id
     @Column(name="id", nullable = false)
