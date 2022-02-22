@@ -18,4 +18,19 @@ public class TarjetaCreditoDAOImpl extends GenericoDAOImpl<TarjetaCredito, Tarje
     public Iterable<TarjetaCredito> findTarjetaCreditosByNombreContains(String nombre) {
         return repository.findTarjetaCreditosByNombreContains(nombre);
     }
+
+    @Override
+    public Iterable<TarjetaCredito> buscarTarjetasPorSalario(Double salario) {
+        return repository.buscarTarjetasPorSalario(salario);
+    }
+
+    @Override
+    public Iterable<TarjetaCredito> buscarTarjetasPorEdad(Integer edad) {
+        return repository.buscarTarjetasPorEdad(edad);
+    }
+
+    @Override
+    public Iterable<TarjetaCredito> buscarTarjetasPorPasion(String pasion) {
+        return repository.buscarTarjetasPorPasion(pasion);
+    }
 }
