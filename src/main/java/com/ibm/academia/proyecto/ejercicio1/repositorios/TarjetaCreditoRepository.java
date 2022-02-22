@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository("repositorioTarjetasCredito")
 public interface TarjetaCreditoRepository extends CrudRepository<TarjetaCredito, Long> {
-    public Iterable<TarjetaCredito> findTarjetaCreditosByNombreContains(String nombre);
+    Iterable<TarjetaCredito> findTarjetaCreditosByNombreContains(String nombre);
 }

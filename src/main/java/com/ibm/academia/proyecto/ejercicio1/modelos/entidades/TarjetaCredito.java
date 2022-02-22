@@ -7,12 +7,15 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
+import java.util.Set;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "tarjetas_credito", schema = "ejercicio1")
+//@Table(name = "tarjetas_credito", schema = "ejercicio1")
+@Table(name = "tarjetas_credito")
 public class TarjetaCredito implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
@@ -22,26 +25,31 @@ public class TarjetaCredito implements Serializable {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name="minimo_salario")
+    @Column(name="minimo_salario", nullable = false)
     private Double minimoSalario;
 
-    @Column(name="maximo_salario")
+    @Column(name="maximo_salario", nullable = true)
     private Double maximoSalario;
 
-    @Column(name="edad_minima")
+    @Column(name="edad_minima", nullable = false)
     private Integer edadMinima;
 
-    @Column(name="edad_maxima")
+    @Column(name="edad_maxima", nullable = false)
     private Integer edadMaxima;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "pasion_id", foreignKey = @ForeignKey(name = "FK_PASION_ID"))
-    private Pasion pasion;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(
+            //name = "tarjeta_pasion", schema = "ejercicio1",
+            name = "tarjeta_pasion",
+            joinColumns = @JoinColumn(name = "tarjeta_id"),
+            inverseJoinColumns = @JoinColumn(name = "pasion_id")
+    )
+    private Set<Pasion> pasiones;
 
     @Column(name = "usuario_creacion", nullable = false)
     private String usuarioCreacion;
 
-    @Column(name = "fecha_creacion", nullable = true)
+    @Column(name = "fecha_creacion", nullable = false)
     private Date fechaCreacion;
 
     @Column(name = "fecha_modificacion", nullable = true)
@@ -69,5 +77,28 @@ public class TarjetaCredito implements Serializable {
         sb.append(", usuarioCreacion='").append(usuarioCreacion).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TarjetaCredito that = (TarjetaCredito) o;
+        return id.equals(that.id) && nombre.equals(that.nombre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre);
+    }
+
+    @PrePersist
+    private void antesPersistir(){
+        this.fechaCreacion = new Date();
+    }
+
+    @PreUpdate
+    private void antesActualizar(){
+        this.fechaModificacion = new Date();
     }
 }
