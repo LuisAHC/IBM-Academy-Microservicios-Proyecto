@@ -13,13 +13,34 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class TarjetaCreditoDAOImpl extends GenericoDAOImpl<TarjetaCredito, TarjetaCreditoRepository> implements TarjetaCreditoDAO{
+public class TarjetaCreditoDAOImpl implements TarjetaCreditoDAO{
+    protected final TarjetaCreditoRepository repository;
     @Autowired
     private PasionDAO pasionDao;
 
     @Autowired
     public TarjetaCreditoDAOImpl(TarjetaCreditoRepository repository) {
-        super(repository);
+        this.repository = repository;
+    }
+
+    @Override
+    public Optional<TarjetaCredito> buscarPorId(Long id) {
+        return repository.findById(id);
+    }
+
+    @Override
+    public TarjetaCredito guardar(TarjetaCredito tarjetaCredito) {
+        return repository.save(tarjetaCredito);
+    }
+
+    @Override
+    public Iterable<TarjetaCredito> buscarTodos() {
+        return repository.findAll();
+    }
+
+    @Override
+    public void eliminarPorId(Long id) {
+        repository.deleteById(id);
     }
 
     @Override
