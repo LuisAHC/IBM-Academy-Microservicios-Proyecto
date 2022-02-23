@@ -1,5 +1,7 @@
 package com.ibm.academia.proyecto.ejercicio1.modelos.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +28,7 @@ public class Pasion implements Serializable {
     private String nombre;
 
     @ManyToMany(mappedBy = "pasiones", fetch = FetchType.LAZY)
+    @JsonIgnore()
     private Set<TarjetaCredito> tarjetasCredito;
 
     @Column(name = "usuario_creacion", nullable = false)
@@ -37,10 +40,9 @@ public class Pasion implements Serializable {
     @Column(name = "fecha_modificacion", nullable = true)
     private Date fechaModificacion;
 
-    public Pasion(Long id, String nombre, Set<TarjetaCredito> tarjetasCredito, String usuarioCreacion) {
+    public Pasion(Long id, String nombre, String usuarioCreacion) {
         this.id = id;
         this.nombre = nombre;
-        this.tarjetasCredito = tarjetasCredito;
         this.usuarioCreacion = usuarioCreacion;
     }
 

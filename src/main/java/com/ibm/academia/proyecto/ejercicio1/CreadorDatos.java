@@ -1,5 +1,6 @@
 package com.ibm.academia.proyecto.ejercicio1;
 
+import com.ibm.academia.proyecto.ejercicio1.modelos.entidades.Pasion;
 import com.ibm.academia.proyecto.ejercicio1.modelos.entidades.TarjetaCredito;
 import com.ibm.academia.proyecto.ejercicio1.servicios.PasionDAO;
 import com.ibm.academia.proyecto.ejercicio1.servicios.TarjetaCreditoDAO;
@@ -28,6 +29,22 @@ public class CreadorDatos implements CommandLineRunner {
 
         TarjetaCredito tarjetaCredito3 = new TarjetaCredito(null, "Clasica", 7000.00,
                 15000.00, 24, 75, "luisceciliano");
-        tarjetaCreditoDao.guardar(tarjetaCredito3);*/
+        tarjetaCreditoDao.guardar(tarjetaCredito3);
+
+        Pasion pasion1 = new Pasion(null, "Shopping", "luisceciliano");
+        pasionDao.guardar(pasion1);
+        Pasion pasion2 = new Pasion(null, "Travels", "luisceciliano");
+        pasionDao.guardar(pasion2);
+        Pasion pasion3 = new Pasion(null, "Help", "luisceciliano");
+        pasionDao.guardar(pasion3);
+        Pasion pasion4 = new Pasion(null, "My business", "luisceciliano");
+        pasionDao.guardar(pasion4);
+        Pasion pasion5 = new Pasion(null, "Sports", "luisceciliano");
+        pasionDao.guardar(pasion5);
+        Pasion pasion6 = new Pasion(null, "My style", "luisceciliano");
+        pasionDao.guardar(pasion6);*/
+
+        /*Long[] pasionesId = {1L, 6L};
+        tarjetaCreditoDao.asociarTarjetaPasion(1L, pasionesId);*/
     }
 }

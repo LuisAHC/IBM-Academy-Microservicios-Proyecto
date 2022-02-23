@@ -9,4 +9,5 @@ public interface TarjetaCreditoDAO extends GenericoDAO<TarjetaCredito>{
     );
     Iterable<TarjetaCredito> buscarTarjetasPorEdad(Integer edad);
     Iterable<TarjetaCredito> buscarTarjetasPorPasion(String pasion);
+    public TarjetaCredito asociarTarjetaPasion(Long tarjetaId, Long[] pasionesId);
 }

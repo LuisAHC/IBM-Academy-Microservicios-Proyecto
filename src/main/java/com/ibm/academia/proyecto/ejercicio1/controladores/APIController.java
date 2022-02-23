@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -21,6 +20,14 @@ public class APIController {
     @Qualifier("tarjetaCreditoDAOImpl")
     private TarjetaCreditoDAO tarjetaCreditoDao;
 
+    /**
+     * Endpoint para consultar tarjetas de crédito adecuadas para un cliente basado en su perfil
+     * @param pasion Nombre de la pasión del usuario
+     * @param salario Salario del usuario
+     * @param edad Edad del usuario
+     * @return Retorna una lista de tarjetas
+     * @author LAHC - 22-02-2022
+     */
     @GetMapping("/tarjetasDisponibles/{pasion}/{salario}/{edad}")
     public ResponseEntity<?> obtenerTarjetasDisponibles(@PathVariable(value = "pasion") String pasion,
                                                         @PathVariable(value = "salario") Double salario,
@@ -28,21 +35,21 @@ public class APIController {
 
         List<TarjetaCredito> lTarjetasSalario = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorSalario(salario);
         List<TarjetaCredito> lTarjetasEdad = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorEdad(edad);
-        //List<TarjetaCredito> lTarjetasPasion = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorPasion(pasion);
+        List<TarjetaCredito> lTarjetasPasion = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorPasion(pasion);
 
-        List<TarjetaCredito> tarjetasDisponibles = new ArrayList<>();
-        System.out.println(lTarjetasSalario);
+        List<TarjetaCredito> tarjetasAuxiliar = new ArrayList<>();
+
         for (TarjetaCredito tarjeta : lTarjetasSalario) {
             if(lTarjetasEdad.contains(tarjeta)) {
-                tarjetasDisponibles.add(tarjeta);
+                tarjetasAuxiliar.add(tarjeta);
             }
         }
 
-        /*for (TarjetaCredito tarjeta : lTarjetasPasion) {
-            if(tarjetasDisponibles.contains(tarjeta)) {
+        List<TarjetaCredito> tarjetasDisponibles = new ArrayList<>();
+        for (TarjetaCredito tarjeta : lTarjetasPasion) {
+            if (tarjetasAuxiliar.contains(tarjeta))
                 tarjetasDisponibles.add(tarjeta);
-            }
-        }*/
+        }
 
         return new ResponseEntity<>(tarjetasDisponibles, HttpStatus.OK);
     }

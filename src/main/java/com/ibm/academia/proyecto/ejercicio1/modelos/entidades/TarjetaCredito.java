@@ -1,5 +1,7 @@
 package com.ibm.academia.proyecto.ejercicio1.modelos.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,6 +46,7 @@ public class TarjetaCredito implements Serializable {
             joinColumns = @JoinColumn(name = "tarjeta_id"),
             inverseJoinColumns = @JoinColumn(name = "pasion_id")
     )
+    @JsonIgnoreProperties({"id", "usuarioCreacion", "fechaCreacion", "fechaModificacion"})
     private Set<Pasion> pasiones;
 
     @Column(name = "usuario_creacion", nullable = false)
