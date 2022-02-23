@@ -32,25 +32,33 @@ public class APIController {
     public ResponseEntity<?> obtenerTarjetasDisponibles(@PathVariable(value = "pasion") String pasion,
                                                         @PathVariable(value = "salario") Double salario,
                                                         @PathVariable(value = "edad") Integer edad){
+        try {
+            List<TarjetaCredito> lTarjetasSalario = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorSalario(salario);
+            List<TarjetaCredito> lTarjetasEdad = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorEdad(edad);
+            List<TarjetaCredito> lTarjetasPasion = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorPasion(pasion);
 
-        List<TarjetaCredito> lTarjetasSalario = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorSalario(salario);
-        List<TarjetaCredito> lTarjetasEdad = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorEdad(edad);
-        List<TarjetaCredito> lTarjetasPasion = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorPasion(pasion);
+            List<TarjetaCredito> tarjetasAuxiliar = new ArrayList<>();
 
-        List<TarjetaCredito> tarjetasAuxiliar = new ArrayList<>();
-
-        for (TarjetaCredito tarjeta : lTarjetasSalario) {
-            if(lTarjetasEdad.contains(tarjeta)) {
-                tarjetasAuxiliar.add(tarjeta);
+            for (TarjetaCredito tarjeta : lTarjetasSalario) {
+                if(lTarjetasEdad.contains(tarjeta)) {
+                    tarjetasAuxiliar.add(tarjeta);
+                }
             }
-        }
 
-        List<TarjetaCredito> tarjetasDisponibles = new ArrayList<>();
-        for (TarjetaCredito tarjeta : lTarjetasPasion) {
-            if (tarjetasAuxiliar.contains(tarjeta))
-                tarjetasDisponibles.add(tarjeta);
-        }
+            List<TarjetaCredito> tarjetasDisponibles = new ArrayList<>();
+            for (TarjetaCredito tarjeta : lTarjetasPasion) {
+                if (tarjetasAuxiliar.contains(tarjeta))
+                    tarjetasDisponibles.add(tarjeta);
+            }
 
-        return new ResponseEntity<>(tarjetasDisponibles, HttpStatus.OK);
+            if (tarjetasDisponibles.isEmpty())
+                return new ResponseEntity<>("No existen tarjetas disponibles para este perfil", HttpStatus.OK);
+
+            return new ResponseEntity<>(tarjetasDisponibles, HttpStatus.OK);
+
+        }catch (RuntimeException e){
+            return new ResponseEntity<>("Página no encontrada, revisa tu URL", HttpStatus.BAD_REQUEST);
+        }
     }
+
 }
