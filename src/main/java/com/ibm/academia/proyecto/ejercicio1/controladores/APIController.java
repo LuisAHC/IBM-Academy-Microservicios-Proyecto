@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -29,10 +26,11 @@ public class APIController {
      * @return Retorna una lista de tarjetas
      * @author LAHC - 22-02-2022
      */
-    @GetMapping("/tarjetasDisponibles/{pasion}/{salario}/{edad}")
-    public ResponseEntity<?> obtenerTarjetasDisponibles(@PathVariable(value = "pasion") String pasion,
-                                                        @PathVariable(value = "salario") Double salario,
-                                                        @PathVariable(value = "edad") Integer edad){
+
+    @GetMapping("/tarjetasDisponibles/")
+    public ResponseEntity<?> obtenerTarjetasDisponibles(@RequestParam(value = "pasion") String pasion,
+                                                        @RequestParam(value = "salario") Double salario,
+                                                        @RequestParam(value = "edad") Integer edad){
         List<TarjetaCredito> lTarjetasSalario = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorSalario(salario);
         List<TarjetaCredito> lTarjetasEdad = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorEdad(edad);
         List<TarjetaCredito> lTarjetasPasion = (List<TarjetaCredito>) tarjetaCreditoDao.buscarTarjetasPorPasion(pasion);
