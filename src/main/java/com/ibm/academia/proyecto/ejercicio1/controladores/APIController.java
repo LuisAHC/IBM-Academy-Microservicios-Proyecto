@@ -57,7 +57,7 @@ public class APIController {
             return new ResponseEntity<>(tarjetasDisponibles, HttpStatus.OK);
 
         }catch (RuntimeException e){
-            return new ResponseEntity<>("Página no encontrada, revisa tu URL", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Encontre un error", HttpStatus.BAD_REQUEST);
         }
     }
 
