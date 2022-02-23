@@ -1,6 +1,5 @@
 package com.ibm.academia.proyecto.ejercicio1.controladores;
 
-import com.ibm.academia.proyecto.ejercicio1.excepciones.BadRequestException;
 import com.ibm.academia.proyecto.ejercicio1.excepciones.NotFoundException;
 import com.ibm.academia.proyecto.ejercicio1.modelos.entidades.TarjetaCredito;
 import com.ibm.academia.proyecto.ejercicio1.servicios.TarjetaCreditoDAO;

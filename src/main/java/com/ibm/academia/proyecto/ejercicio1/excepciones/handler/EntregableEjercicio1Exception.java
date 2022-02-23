@@ -3,7 +3,6 @@ package com.ibm.academia.proyecto.ejercicio1.excepciones.handler;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ibm.academia.proyecto.ejercicio1.excepciones.BadRequestException;
 import com.ibm.academia.proyecto.ejercicio1.excepciones.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +16,5 @@ public class EntregableEjercicio1Exception {
 		Map<String, Object> respuesta = new HashMap<String, Object>();
 		respuesta.put("error", exception.getMessage());
 		return new ResponseEntity<>(respuesta, HttpStatus.NOT_FOUND);
-	}
-	
-	@ExceptionHandler(value = BadRequestException.class)
-	public ResponseEntity<Object> formatoInvalidoException(BadRequestException exception) {
-		Map<String, Object> respuesta = new HashMap<String, Object>();
-		respuesta.put("error", exception.getMessage());
-		return new ResponseEntity<>(respuesta, HttpStatus.BAD_REQUEST);
 	}
 }
